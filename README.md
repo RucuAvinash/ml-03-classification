@@ -83,7 +83,7 @@ open a machine terminal in your `Repos` folder:
 
 ```shell
 # Replace username with YOUR GitHub username.
-git clone https://github.com/username/ml-03-classification
+git clone https://github.com/RucuAvinash/ml-03-classification
 
 cd ml-03-classification
 code .
@@ -93,7 +93,7 @@ code .
 
 These are listed for convenience.
 For best results, follow the detailed instructions in
-[pro-analytics-02 guide](https://denisecase.github.io/pro-analytics-02/).
+[pro-analytics-02 guide](https://RucuAvinash.github.io/pro-analytics-02/).
 
 ```shell
 uv self update
