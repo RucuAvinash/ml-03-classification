@@ -1,0 +1,17 @@
+species,island,bill_length_mm,bill_depth_mm,neighborhood
+Adelie,Torgersen,39.1,18.7,North
+Adelie,Torgersen,39.5,17.4,North
+Adelie,Torgersen,40.3,18,North
+Gentoo,Biscoe,46.1,13.2,South
+Gentoo,Biscoe,50,16.3,South
+Chinstrap,Dream,51.5,16.3,East
+Chinstrap,Dream,49.5,16.1,East
+Chinstrap,Dream,50.1,16,East
+Adelie,Torgersen,40.1,18.7,North
+Adelie,Torgersen,45.5,17.4,North
+Adelie,Torgersen,50.3,18,North
+Gentoo,Biscoe,36.1,13.2,South
+Gentoo,Biscoe,40,16.3,South
+Chinstrap,Dream,31.5,16.3,East
+Chinstrap,Dream,39.5,16.1,East
+Chinstrap,Dream,40.1,16,East
