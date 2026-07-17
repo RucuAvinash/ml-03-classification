@@ -6,197 +6,187 @@
 
 > Professional Python project: building and evaluating classification models.
 
-## Project Description
+Project Description
+This project implements Module 3 classification workflows using a custom dataset instead of the built‑in Seaborn penguins dataset. The custom dataset (penguin_neighbor.csv) includes penguin measurements and a manually created categorical label called neighborhood, which becomes the target for prediction.
 
-This project focuses on how to build models that predict a category.
+The project demonstrates:
 
-We learn to:
+loading and cleaning a custom CSV dataset
 
-- train and evaluate a classifier (e.g., decision tree, logistic regression, k-NN)
-- read a confusion matrix and classification report
-- interpret accuracy, precision, recall, and F1
-- choose a model based on the problem and the data
+normalizing inconsistent categorical values
 
-## Example Notebook + Your Notebook
+encoding categorical features
 
-Keep the example notebook as it is.
-Either copy it or use it to build a new notebook that ends in _yourname.
-See [docs/your-files.md] for more.
+balancing classes for stratified splitting
 
-Links:
+training and evaluating a Decision Tree classifier
 
-- [ml_03_case.ipynb](notebooks/ml_03_case.ipynb)
+performing a parameter sweep (max_depth)
 
-## Working Files
+interpreting confusion matrices and classification reports
 
-You'll work with these areas:
+documenting results in a reproducible notebook
 
-- **data/raw** - raw data for exploration (only if you add a dataset)
-- **docs/** - project narrative and documentation
-- **src/mlstudio/** - the app is an example; run only (no need to modify)
-- **notebooks/** - interactive analysis
-- **pyproject.toml** - update authorship & links
-- **zensical.toml** - update authorship & links
+This project shows how to adapt the example workflow to a realistic, messy dataset and make analyst‑driven modeling decisions.
 
-## Instructions (pro-analytics-02)
+Assignment Notebooks
+Main notebook used for this assignment:
 
-Follow the
-[step-by-step workflow guide](https://denisecase.github.io/pro-analytics-02/workflow-b-apply-example-project/)
-to complete:
+notebooks/ml_03_rucu.ipynb (your custom notebook)
 
-1. Phase 1. **Start & Run**
-2. Phase 2. **Change Authorship**
-3. Phase 3. **Read & Understand**
-4. Phase 4. **Modify**
-5. Phase 5. **Apply**
+Supporting example notebook:
 
-## Challenges
+notebooks/ml_03_case.ipynb
 
-Challenges are expected.
-Sometimes instructions may not quite match your operating system.
-When issues occur, share screenshots, error messages, and details about what you tried.
-Working through issues is part of implementing professional projects.
+Custom Dataset
+Your custom dataset is located at:
 
-## Success
+Code
+data/raw/penguin_neighbor.csv
+It includes:
 
-After completing Phase 1. **Start & Run**, you'll have your own GitHub project,
-with the example notebook executed and committed,
-and running the example module will print out:
+bill_length_mm
 
-```shell
-========================
-Executed successfully!
-========================
-```
+bill_depth_mm
 
-A new file `project.log` will appear in the root project folder.
+species
 
-## Command Reference
+island
 
-<details>
-<summary>Show command reference</summary>
+neighborhood (custom target)
 
-### In a machine terminal (open in your `Repos` folder)
+Key Data Challenges You Solved
+inconsistent capitalization (north, NORTH, North)
 
-After you get a copy of this repo in your own GitHub account,
-open a machine terminal in your `Repos` folder:
+trailing whitespace
 
-```shell
-# Replace username with YOUR GitHub username.
-git clone https://github.com/RucuAvinash/ml-03-classification
+encoding issues
 
-cd ml-03-classification
-code .
-```
+class imbalance (some neighborhoods had only one row)
 
-### In a VS Code terminal
+NA‑dropping reducing class counts
 
-These are listed for convenience.
-For best results, follow the detailed instructions in
-[pro-analytics-02 guide](https://RucuAvinash.github.io/pro-analytics-02/).
+stratification errors
 
-```shell
+You fixed these by:
+
+using .str.strip().str.title()
+
+adding additional rows
+
+re‑encoding categories
+
+rebuilding df_model after cleaning
+
+Modeling Approach
+This is a supervised classification problem because the dataset includes a target (neighborhood) with discrete categories.
+
+You used:
+
+DecisionTreeClassifier
+
+StandardScaler
+
+train_test_split with stratify=y
+
+max_depth sweep from 1 to 12
+
+Why a Decision Tree?
+interpretable
+
+works well on small datasets
+
+handles encoded categorical features
+
+easy to tune
+
+appropriate for your custom target
+
+Custom Target: Neighborhood
+The example project predicts species.
+Your custom project predicts neighborhood, which required:
+
+cleaning inconsistent labels
+
+adding rows to balance classes
+
+re‑encoding categories
+
+This change matters because it transforms the project into a realistic ML workflow where data preparation is essential.
+
+Features Used
+You selected features available in your custom CSV:
+
+bill_length_mm
+
+bill_depth_mm
+
+species (encoded)
+
+island (encoded)
+
+You removed features not present in your dataset (flipper length, body mass).
+
+Evaluation and Results
+You evaluated your model using:
+
+accuracy score
+
+classification report
+
+confusion matrix
+
+parameter sweep
+
+Key Results
+The model trained successfully after cleaning the dataset.
+
+The confusion matrix showed correct predictions across all neighborhoods.
+
+The parameter sweep revealed the classic pattern:
+
+shallow trees underfit
+
+deep trees overfit
+
+max_depth=3 provided the best balance
+
+Phase 4 Modification
+You modified the example project by:
+
+replacing the dataset
+
+cleaning and encoding the custom target
+
+balancing classes
+
+updating the feature list
+
+fixing stratification errors
+
+Phase 5 Custom Project
+You implemented a full custom classification workflow predicting neighborhood instead of species. This required adapting the example notebook to a new dataset, selecting appropriate features, cleaning the target, and tuning the model.
+
+Commands Used
+shell
 uv self update
 uv python pin 3.14
 uv lock --upgrade
 uv sync --extra dev --extra docs --upgrade
 
 uvx pre-commit install
-uvx pre-commit autoupdate
-
-git add -A
-uvx pre-commit run --all-files
-# repeat if changes were made
 uvx pre-commit run --all-files
 
-# run the example module to verify the environment (.venv/)
-uv run python -m mlstudio.app_case
+uv run python -m nbconvert --to notebook --execute --inplace notebooks/ml_03_rucu.ipynb
 
-# run common chores
 uv run ruff format .
 uv run ruff check . --fix
 uv run python -m pyright
 uv run python -m pytest
-uv run python -m zensical build
+Documentation
+Your project narrative and results are located in:
 
-# save progress
-git add -A
-git commit -m "update"
-git push -u origin main
-```
-
-</details>
-
-## Notes
-
-- Use the **UP ARROW** and **DOWN ARROW** in the terminal to scroll through past commands.
-- Use `CTRL+f` to find (and replace) text within a file.
-- You do not need to add to or modify `tests/`. They are provided for example only.
-- Many files are silent helpers. Explore as you like, but nothing is required.
-- You do NOT need to understand everything; understanding builds naturally over time.
-
-## Troubleshooting >>>
-
-If you see something like this in your terminal: `>>>` or `...`
-You accidentally started Python interactive mode.
-It happens.
-Press `Ctrl+c` (both keys together) or `Ctrl+Z` then `Enter` on Windows.
-
-## Example Output (Can Remove this Section after You Verify)
-
-```shell
-| INFO | ML | Summarize workflow........
-| INFO | ML | ========================
-| INFO | ML | SUMMARY
-| INFO | ML | ========================
-| INFO | ML | Dataset: hours_scores_case
-| INFO | ML | Original rows: 10
-| INFO | ML | Clean rows: 10
-| INFO | ML | Features: ['hours_studied', 'practice_quizzes', 'attendance_pct', 'sleep_hours', 'prior_score']
-| INFO | ML | Target: score
-| INFO | ML | ----- in a script, call plt.show() once at the end to display all charts -----
-| INFO | ML | ----- in a script, CLOSE the chart windows with the close button to CONTINUE -----
-| INFO | ML | Workflow complete
-| INFO | ML | IMPORTANT: This script creates chart windows.
-| INFO | ML | Close chart windows and terminate this process with CTRL+c as needed.
-| INFO | ML | ========================
-| INFO | ML | Executed successfully!
-| INFO | ML | ========================
-```
-
-## Findings and Visuals
-
-Take screenshots of your charts and provide them here with a discussion.
-In Markdown, display a figure by using:
-an exclamation mark immediately followed by square brackets containing a useful caption
-immediately followed by parentheses containing the relative path to your figure.
-Note: When you start typing the path with a dot (.) for "here, in this directory",
-the IDE may help complete the path.
-
-In your custom project, follow this example, but
-
-- your figures and narrative should reflect your work,
-- this `README.md` should include your commands, process, and visuals, and
-- `docs/index.md` should include your narrative.
-
-Remove unnecessary instructional comments in your custom files.
-
-Update figures to present interesting results from your custom project:
-
-![Provide a Useful Caption](./docs/images/Figure_1.png)
-
-![Provide a Useful Caption](./docs/images/Figure_2.png)
-
-## Project Documentation
-
-Additional project instructions, terms, and notes:
-
-[docs/index.md](docs/index.md)
-
-## Citation
-
-[CITATION.cff](./CITATION.cff)
-
-## License
-
-[MIT](./LICENSE)
+Code
+docs/index.md
+License
+MIT License — see LICENSE file.
